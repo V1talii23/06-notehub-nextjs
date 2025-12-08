@@ -22,6 +22,7 @@ function Modal({ children, onClose }: ModalProps) {
     };
     document.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
+    document.getElementById('modal')!.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);

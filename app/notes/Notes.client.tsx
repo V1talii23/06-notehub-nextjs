@@ -4,7 +4,6 @@ import css from '../page.module.css';
 import { KEY } from './page';
 import { getNotes } from '@/lib/api';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-// import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -15,11 +14,6 @@ import NoteForm from '@/components/NoteForm/NoteForm';
 import NoteList from '@/components/NoteList/NoteList';
 
 function NotesClient() {
-  //   const { search = '', page: currentPage } = useParams<{
-  //     search: string;
-  //     page: string;
-  //   }>();
-
   const [page, setPage] = useState(1);
   const [searchNote, setSearchNote] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,8 +27,8 @@ function NotesClient() {
   }, 1000);
 
   const { data, isSuccess, error, isLoading } = useQuery({
-    queryKey: [KEY],
-    queryFn: () => getNotes(),
+    queryKey: [KEY, searchNote, page],
+    queryFn: () => getNotes(searchNote, page),
     staleTime: 60 * 1000,
     placeholderData: keepPreviousData,
     refetchOnMount: false,
