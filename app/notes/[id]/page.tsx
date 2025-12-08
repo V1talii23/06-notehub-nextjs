@@ -6,9 +6,9 @@ import {
 import { fetchNoteById } from '@/lib/api';
 import NoteDetailsClient from './NoteDetails.client';
 
-type Props = { params: Promise<{ id: string }> };
+type NoteDetailsProps = { params: Promise<{ id: string }> };
 
-const NoteDetails = async ({ params }: Props) => {
+const NoteDetails = async ({ params }: NoteDetailsProps) => {
   const { id } = await params;
   const queryClient = new QueryClient();
 
