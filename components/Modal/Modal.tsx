@@ -1,13 +1,17 @@
 import css from './Modal.module.css';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
+import ErrorMsg from '@/app/notes/error';
 
 interface ModalProps {
   children: React.ReactNode;
   onClose: () => void;
+  error: Error;
 }
 
-function Modal({ children, onClose }: ModalProps) {
+function Modal({ children, onClose, error }: ModalProps) {
+  const ModalEl = document.getElementById('modal');
+
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -30,17 +34,24 @@ function Modal({ children, onClose }: ModalProps) {
     };
   }, [onClose]);
 
-  return createPortal(
-    <div
-      onClick={handleBackdropClick}
-      className={css.backdrop}
-      role="dialog"
-      aria-modal="true"
-    >
-      <div className={css.modal}>{children}</div>
-    </div>,
-    document.getElementById('modal')!
-  );
+  if (!ModalEl) {
+    return <ErrorMsg error={error} />;
+  }
+
+  if (ModalEl) {
+    return createPortal(
+      <div
+        onClick={handleBackdropClick}
+        className={css.backdrop}
+        role="dialog"
+        aria-modal="true"
+      >
+        <div className={css.modal}>{children}</div>
+      </div>,
+
+      ModalEl
+    );
+  }
 }
 
 export default Modal;

@@ -8,10 +8,10 @@ import NotesClient from './Notes.client';
 
 export const KEY = 'notes';
 
-type NotesProps = { params: Promise<{ search: string; page: string }> };
+type NotesProps = { searchParams: Promise<{ search: string; page: string }> };
 
-async function Notes({ params }: NotesProps) {
-  const { search, page } = await params;
+async function Notes({ searchParams }: NotesProps) {
+  const { search, page } = await searchParams;
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
